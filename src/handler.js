@@ -15,20 +15,7 @@ const addBookHandler = (request, h) => {
     };
 
     const newBook = { name, year, author, summary, id, publisher, insertedAt, updatedAt, pageCount, readPage, reading, finished };
-    books.push(newBook);
-    
-    const isSuccess = books.filter((book) => book.id === id).length > 0;
-    if (isSuccess) {
-        const response = h.response({
-          status: 'success',
-          message: 'Buku berhasil ditambahkan',
-          data: {
-            bookId: id,
-          },
-        });
-        response.code(201);
-        return response;
-    };
+
     if (name === undefined) {
         const response = h.response ({
             status: 'fail', 
@@ -45,7 +32,22 @@ const addBookHandler = (request, h) => {
         response.code(400);
         return response;
     };
-    const response = h.response({
+
+    books.push(newBook);
+
+    const isSuccess = books.filter((book) => book.id === id).length > 0;
+    if (isSuccess) {
+        const response = h.response({
+          status: 'success',
+          message: 'Buku berhasil ditambahkan',
+          data: {
+            bookId: id,
+          },
+        });
+        response.code(201);
+        return response;
+    };
+        const response = h.response({
         status: 'error', 
         message: 'Buku gagal ditambahkan',
       });
